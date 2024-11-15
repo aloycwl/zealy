@@ -6,17 +6,15 @@ import {IERC20} from "./IERC20.sol";
 import {ECDSA} from "./ECDSA.sol";
 
 contract Reward is Ownable {
-    mapping(address => uint256) public userNonce;
     address public tokenAddress;
+    address public signer;
 
-    function reward(bytes memory c) external {
-        (uint256 amount, uint8 v, bytes32 r, bytes32 s) = ECDSA.diffuser(c);
+    function reward(bytes calldata c) external {
+        (uint256 amount, uint bid, uint8 v, bytes32 r, bytes32 s) = ECDSA.diffuser(c);
 
-        bytes32 hash = ECDSA.hashing(amount, userNonce[msg.sender]);
+        bytes32 hash = ECDSA.hashing(msg.sender, amount, bid);
 
         require(ECDSA.recover(hash, v, r, s) == msg.sender, "sig failed");
-
-        ++userNonce[msg.sender];
 
         IERC20(tokenAddress).transfer(msg.sender, amount);
     }
@@ -25,20 +23,25 @@ contract Reward is Ownable {
         tokenAddress = _newToken;
     }
 
-    function removeLiquid(uint256 amount) external onlyOwner {
-        IERC20(tokenAddress).transfer(msg.sender, amount);
+    function removeLiquid(uint256 _amount) external onlyOwner {
+        IERC20(tokenAddress).transfer(msg.sender, _amount);
     }
 
-    function tryDiffuser(bytes memory c)
+    function tryDiffuser(bytes memory _c)
         public
         pure
         returns (
+            uint256,
             uint256,
             uint8,
             bytes32,
             bytes32
         )
     {
-        return ECDSA.diffuser(c);
+        return ECDSA.diffuser(_c);
+    }
+
+    function setSigner(address _newSigner) external onlyOwner {
+        signer = _newSigner;
     }
 }

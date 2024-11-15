@@ -12,6 +12,7 @@ contract TestDeploy {
         RewardAddress = address(new Reward());
         address usdt = address(new USDTMock());
         Reward(RewardAddress).setTokenAddress(usdt);
+        Reward(RewardAddress).setSigner(0xA34357486224151dDfDB291E13194995c22Df505);
         IERC20(usdt).transfer(RewardAddress, 1e22);
     }
 }
