@@ -11,9 +11,10 @@ contract Deploy is Hashes {
     constructor() {
         address r = address(new Upgrade(address(new Reward())));
 
-        // For testing use
+        /***  For testing use ****/
         address usdt = address(new USDTMock());
         IERC20(usdt).transfer(r, 1e22);
+        /***  Comment for deployment ****/
 
         assembly {
             sstore(0x01, r)

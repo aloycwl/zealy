@@ -15,6 +15,7 @@ contract Reward is Ownable, ECDSA {
         uint8 v;
         bytes32 r;
         bytes32 s;
+
         assembly {
             n := mload(add(c, 0x20))
             t := n
@@ -30,10 +31,7 @@ contract Reward is Ownable, ECDSA {
         IERC20(t).transfer(msg.sender, a);
     }
 
-    function removeLiquid(uint256 _amount, address _tokenaddress)
-        external
-        onlyOwner
-    {
-        IERC20(_tokenaddress).transfer(msg.sender, _amount);
+    function removeLiquid(uint256 a, address t) external onlyOwner {
+        IERC20(t).transfer(msg.sender, a);
     }
 }
