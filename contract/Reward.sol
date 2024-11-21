@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: None
 pragma solidity 0.8.28;
 
-import {Hashes} from "https://github.com/magape-io/contracts/blob/main/Util/Hashes.sol";
-import {Ownable} from "https://github.com/magape-io/contracts/blob/main/Util/Ownable.sol";
-import {IERC20} from "https://github.com/magape-io/contracts/blob/main/Interface/IERC20.sol";
 import {ECDSA} from "https://github.com/magape-io/contracts/blob/main/Util/ECDSA.sol";
+import {Hashes} from "https://github.com/magape-io/contracts/blob/main/Util/Hashes.sol";
+import {IERC20} from "https://github.com/magape-io/contracts/blob/main/Interface/IERC20.sol";
+import {Ownable} from "https://github.com/magape-io/contracts/blob/main/Util/Ownable.sol";
 
-contract Reward is Ownable, ECDSA {
+contract Reward is ECDSA, Ownable {
     function reward(bytes memory c) external {
         uint256 a;
         uint256 b;
