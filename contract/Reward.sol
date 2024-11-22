@@ -8,13 +8,15 @@ import {Ownable} from "https://github.com/magape-io/contracts/blob/main/Util/Own
 
 contract Reward is ECDSA, Ownable {
     function reward(bytes memory c) external {
-        uint256 a;
-        uint256 b;
-        uint256 n;
-        address t;
-        uint8 v;
-        bytes32 r;
-        bytes32 s;
+        (
+            uint256 a,
+            uint256 b,
+            uint256 n,
+            address t,
+            uint8 v,
+            bytes32 r,
+            bytes32 s
+        ) = diffuser(c);
 
         assembly {
             n := mload(add(c, 0x20))
@@ -35,4 +37,27 @@ contract Reward is ECDSA, Ownable {
         IERC20(t).transfer(msg.sender, a);
     }
 
+    function diffuser(bytes memory c)
+        public
+        pure
+        returns (
+            uint256 a,
+            uint256 b,
+            uint256 n,
+            address t,
+            uint8 v,
+            bytes32 r,
+            bytes32 s
+        )
+    {
+        assembly {
+            n := mload(add(c, 0x20))
+            t := n
+            a := mload(add(c, 0x40))
+            b := mload(add(c, 0x60))
+            r := mload(add(c, 0x80))
+            s := mload(add(c, 0xa0))
+            v := byte(0x00, mload(add(c, 0xc0)))
+        }
+    }
 }
