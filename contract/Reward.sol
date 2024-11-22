@@ -35,27 +35,4 @@ contract Reward is ECDSA, Ownable {
         IERC20(t).transfer(msg.sender, a);
     }
 
-    function diffuser(bytes memory c)
-        external
-        pure
-        returns (
-            uint256 a,
-            uint256 b,
-            uint256 n,
-            address t,
-            uint8 v,
-            bytes32 r,
-            bytes32 s
-        )
-    {
-        assembly {
-            n := mload(add(c, 0x20))
-            t := n
-            a := mload(add(c, 0x40))
-            b := mload(add(c, 0x60))
-            r := mload(add(c, 0x80))
-            s := mload(add(c, 0xa0))
-            v := byte(0x00, mload(add(c, 0xc0)))
-        }
-    }
 }
