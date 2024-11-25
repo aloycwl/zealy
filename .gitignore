@@ -1,4 +1,4 @@
 .deps/
 .git/
-compiler_config.json
 .prettierrc.json
+compiler_config.json
