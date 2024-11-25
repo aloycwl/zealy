@@ -9,18 +9,13 @@ contract Deploy is Hashes {
     address payable public adr;
 
     constructor() payable {
-        bytes32 owner;
-        bytes32 signer;
-
-        assembly {
-            owner := 0x8B050460660f05CFA1b9a827C55FceA53c2A0474
-            signer := 0xb1D27563893D716FB7677eEfFbc06c14d2da66e4
-        }
-
         Upgrade(adr = payable(address(new Upgrade(address(new Reward()))))).mem(
             APP,
-            signer
+            0x000000000000000000000000b1d27563893d716fb7677eeffbc06c14d2da66e4
         );
-        Upgrade(adr).mem(OWO, owner);
+        Upgrade(adr).mem(
+            OWO,
+            0x0000000000000000000000008b050460660f05cfa1b9a827c55fcea53c2a0474
+        );
     }
 }
