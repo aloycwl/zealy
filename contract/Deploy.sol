@@ -10,7 +10,7 @@ import {USDTMock} from "https://github.com/magape-io/contracts/blob/main/tests/U
 contract Deploy is Hashes {
     address public RewardAddress;
 
-    constructor() {
+    constructor() payable {
         RewardAddress = address(new Upgrade(address(new Reward())));
 
         bytes32 owner;

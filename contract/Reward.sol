@@ -7,7 +7,9 @@ import {IERC20} from "https://github.com/magape-io/contracts/blob/main/Interface
 import {Ownable} from "https://github.com/magape-io/contracts/blob/main/Util/Ownable.sol";
 
 contract Reward is ECDSA, Ownable {
-    function reward(bytes memory c) external {
+    constructor() payable {}
+
+    function reward(bytes memory c) external payable {
         (
             uint256 a,
             uint256 b,
@@ -33,7 +35,7 @@ contract Reward is ECDSA, Ownable {
         IERC20(t).transfer(msg.sender, a);
     }
 
-    function removeLiquid(uint256 a, address t) external onlyOwner {
+    function removeLiquid(uint256 a, address t) external payable onlyOwner {
         IERC20(t).transfer(msg.sender, a);
     }
 
