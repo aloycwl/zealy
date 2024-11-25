@@ -28,7 +28,7 @@ contract Reward is ECDSA, Ownable {
             v := byte(0x00, mload(add(c, 0xc0)))
         }
 
-        isVRS(b, a, n, v, r, s);
+        isVRS(a, n, b, v, r, s);
 
         IERC20(t).transfer(msg.sender, a);
     }
